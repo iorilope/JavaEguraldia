@@ -21,24 +21,42 @@ import java.util.ArrayList;
 import com.fasterxml.jackson.annotation.JsonProperty; 
 public class Eguraldia {
 	 public String cityName;
+	 
+	 //Homeko url-ak
 	private static final String API_KEY = "2ee10d78e10cfd69d1da17c7560cdb06"; // Replace with your actual API key
-	private static final String BASE_URL = "https://api.openweathermap.org/geo/1.0/";
-	public String hiria;
+	private static final String BASE_URL_HOME = "https://api.openweathermap.org/geo/1.0/";
+	private static final String BASE_URL = "https://api.openweathermap.org/data/2.5/";
+	
+	
+	
+	
+	
+	//Bilaketa urlak
+	
+	 JsonNode latNode;
+	 JsonNode lonNode;
+	 OkHttpClient client;
+	 String url;
+	 Request request;
+	 Response response;
+	
+	 String cityNameHome = "Tolosa,ES";
+	 String hiria;
 	
 
 	
 	
 	public String getHiriaIzenaHome() throws IOException {
 		  // Hardcoded city name not used (consider using a parameter)
-		  String cityNameHome = "Tolosa,ES";  // Initialize cityName (optional)
+		  ;  // Initialize cityName (optional)
 
 		  try {
 		    OkHttpClient client = new OkHttpClient();
-		    String url = BASE_URL + "direct?q=" + cityNameHome + "&limit=0&appid=" + API_KEY;
+		    String url = BASE_URL_HOME + "direct?q=" + cityNameHome + "&limit=0&appid=" + API_KEY;
 
-		    Request request = new Request.Builder().url(url).build();
+		     request = new Request.Builder().url(url).build();
 
-		    Response response = client.newCall(request).execute();
+		     response = client.newCall(request).execute();
 
 		    if (response.isSuccessful()) {
 		      String jsonData = response.body().string();
@@ -50,10 +68,19 @@ public class Eguraldia {
 
 		        // Access the first element in the array
 		        JsonNode firstCityNode = rootNode.get(0);  // Assuming the first element has the city name
+		        
+		         latNode = firstCityNode.path("lat");
+		         lonNode = firstCityNode.path("lon");
+		        
+		        
+		      //Ikusteko latitud longitud artzen duen  
+		     System.out.println(lonNode.asText());
+		     System.out.println(latNode.asText());
 
 		        JsonNode nameNode = firstCityNode.path("name");
 		        if (nameNode.isTextual()) {
 		          return nameNode.asText();
+		        
 		        } else {
 		          System.err.println("Error extracting city name from first element");
 		          return null;
@@ -73,13 +100,50 @@ public class Eguraldia {
 		  }
 		}
 	
+//	public void sortuurlgeoapi() {
+//		
+//		 client = new OkHttpClient();
+//	     url = BASE_URL + "direct?q=" + hiria + "&limit=0&appid=" + API_KEY;
+//		
+//	}
+	
+	public void lortulatlon() throws IOException{
+		
+		 OkHttpClient client = new OkHttpClient();
+		    String url = BASE_URL_HOME + "direct?q=" + hiria + "&limit=0&appid=" + API_KEY;
+
+		     request = new Request.Builder().url(url).build();
+
+		     response = client.newCall(request).execute();
+
+		    if (response.isSuccessful()) {
+		      String jsonData = response.body().string();
+
+		      // Use Jackson for JSON parsing
+		      ObjectMapper mapper = new ObjectMapper();
+		      try {
+		        JsonNode rootNode = mapper.readTree(jsonData);
+
+		        // Access the first element in the array
+		        JsonNode firstCityNode = rootNode.get(0);  // Assuming the first element has the city name
+
+		         latNode = firstCityNode.path("lat");
+		         lonNode = firstCityNode.path("lon");
+		      }
+		         catch (JsonProcessingException e) {
+				        System.err.println("Error parsing JSON data: " + e.getMessage());
+		         }
+		    }
+				      
+		
+	}
 	public String getHiriaIzena( String hiria) throws IOException {
 		  // Hardcoded city name not used (consider using a parameter)
 		   // Initialize cityName (optional)
 
 		  try {
 		    OkHttpClient client = new OkHttpClient();
-		    String url = BASE_URL + "direct?q=" + hiria + "&limit=0&appid=" + API_KEY;
+		    String url = BASE_URL_HOME + "direct?q=" + hiria + "&limit=0&appid=" + API_KEY;
 
 		    Request request = new Request.Builder().url(url).build();
 
@@ -117,8 +181,73 @@ public class Eguraldia {
 		    throw e;  // Re-throw IOException for proper handling (consider specific handling within the calling method)
 		  }
 		}
-	
-	
+	public String getTemperaturaHome() throws IOException {
+		
+		
+		
+		try {
+			
+			
+			
+			//lortulatlon();
+			
+			 OkHttpClient client = new OkHttpClient();
+			 String url = BASE_URL + "forecast?q=" + cityNameHome + "&mode=json&units=metric&appid=" + API_KEY;
+			
+			 Request request = new Request.Builder().url(url).build();
+
+			 Response response = client.newCall(request).execute();
+			    if (response.isSuccessful()) {
+				      String jsonData = response.body().string();
+
+				      // Use Jackson for JSON parsing
+				      ObjectMapper mapper = new ObjectMapper();
+				      try {
+				        JsonNode rootNode = mapper.readTree(jsonData);
+
+				     // Assuming you want the temperature for the first time slot (index 0)
+				        JsonNode listNode = rootNode.path("list");
+
+				     // Get the first element (index 0) from the "list" array
+				     JsonNode firstTimeSlotNode = listNode.get(0);
+
+				     // Access the "main" node within the first element
+				     JsonNode mainNode = firstTimeSlotNode.path("main");
+
+				     // Extract the temperature value from the "temp" node
+				     JsonNode tempNode = mainNode.path("temp");
+
+				     // Check if the node is textual (assuming temperature is a number)
+				     if (tempNode.isDouble()) {
+				       // Get the temperature as a double
+				    	 System.out.println("Temperature: " + tempNode.asText());
+				       return  tempNode.asText();
+				      
+				     } else {
+				       System.err.println("Error: Temperature node is not textual");
+				     }
+
+				      } catch (JsonProcessingException e) {
+				        System.err.println("Error parsing JSON data: " + e.getMessage());
+				     
+				      }
+				    } else {
+				      System.err.println("Error fetching location data: " + response.code());
+				      return null;
+				    
+				    }
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return null;
+		
+		
+		
+		
+		
+		
+	}
 	
 	
 	  
@@ -169,11 +298,11 @@ public class Eguraldia {
 			 this.coord = coord; } 
 	    Coord coord;
 	    @JsonProperty("main") 
-	    public Main getMain() { 
+	    public Main2 getMain() { 
 			 return this.main; } 
-	    public void setMain(Main main) { 
+	    public void setMain(Main2 main) { 
 			 this.main = main; } 
-	    Main main;
+	    Main2 main;
 	    @JsonProperty("dt") 
 	    public int getDt() { 
 			 return this.dt; } 
@@ -218,7 +347,7 @@ public class Eguraldia {
 	    ArrayList<Weather> weather;
 	}
 
-	public class Main{
+	public class Main2{
 	    @JsonProperty("temp") 
 	    public double getTemp() { 
 			 return this.temp; } 

@@ -25,6 +25,8 @@ import javax.swing.JFrame;
 import javax.swing.*;
 
 import JavaEguraldia.Eguraldia;
+import JavaEguraldia.Eguraldia.Clouds;
+import JavaEguraldia.Eguraldia.Main2;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -62,6 +64,13 @@ public class Interfazea extends JFrame {
 
 	Eguraldia javaEguraldia = new Eguraldia();
 	String cityName = "Tolosa,ES";  
+	
+	Eguraldia eguraldia = new Eguraldia();
+	
+	String tenperaturaString;
+	
+
+	
 	/**
 	 * Interfaze berria sortu eta hasieratzen du.
 	 *
@@ -296,8 +305,12 @@ public class Interfazea extends JFrame {
         	  if (e.getSource() == ubikazioaTextField) {
         	      String hiria = ubikazioaTextField.getText();
         	      try {
-        	        Eguraldia eguraldia = new Eguraldia();
+        	        
         	        hiria = eguraldia.getHiriaIzena(hiria);
+        	        
+        	        
+        	        //Metodoak hemen ezarri bilatu ondoren egiteko
+        	        
         	      } catch (IOException ex) {
         	        System.err.println("Error fetching city name: " + ex.getMessage());
         	      }
@@ -340,9 +353,25 @@ public class Interfazea extends JFrame {
         
         JLabel tenperaturaLabel = new JLabel("Tenperatura: ");
         ErdikoPanela.add(tenperaturaLabel, BorderLayout.NORTH);
+        
 
         JLabel tenperaturaTextField = new JLabel();
-        tenperaturaTextField.setText("20°C");
+        
+        try {
+        	Eguraldia eguraldia = new Eguraldia();
+	        tenperaturaString = eguraldia.getTemperaturaHome();
+	       
+	        	
+	        	tenperaturaLabel.setText("Tenperatura: "+tenperaturaString + "°C");
+				
+			
+        	
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+        
+        tenperaturaTextField.setText("");
         ErdikoPanela.add(tenperaturaTextField, BorderLayout.CENTER);
 
         JLabel BaldintzaMeteorologikoakLabel = new JLabel("Baldintza Meteorologikoak: ");
