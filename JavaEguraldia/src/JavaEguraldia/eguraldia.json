@@ -1,0 +1,122 @@
+{
+  "message": "accurate",
+  "cod": "200",
+  "count": 3,
+  "list": [
+    {
+      "id": 3108008,
+      "name": "Tolosa",
+      "coord": {
+        "lat": 43.1348,
+        "lon": -2.078
+      },
+      "main": {
+        "temp": 65.52,
+        "feels_like": 64.81,
+        "temp_min": 58.08,
+        "temp_max": 73.67,
+        "pressure": 1020,
+        "humidity": 65,
+        "sea_level": 1020,
+        "grnd_level": 1011
+      },
+      "dt": 1711109614,
+      "wind": {
+        "speed": 4.05,
+        "deg": 351
+      },
+      "sys": {
+        "country": "ES"
+      },
+      "rain": null,
+      "snow": null,
+      "clouds": {
+        "all": 52
+      },
+      "weather": [
+        {
+          "id": 803,
+          "main": "Clouds",
+          "description": "broken clouds",
+          "icon": "04d"
+        }
+      ]
+    },
+    {
+      "id": 6358159,
+      "name": "Tolosa",
+      "coord": {
+        "lat": 43.1078,
+        "lon": -2.0801
+      },
+      "main": {
+        "temp": 63.07,
+        "feels_like": 62.04,
+        "temp_min": 55.85,
+        "temp_max": 71.42,
+        "pressure": 1020,
+        "humidity": 63,
+        "sea_level": 1020,
+        "grnd_level": 989
+      },
+      "dt": 1711109783,
+      "wind": {
+        "speed": 4.09,
+        "deg": 353
+      },
+      "sys": {
+        "country": "ES"
+      },
+      "rain": null,
+      "snow": null,
+      "clouds": {
+        "all": 51
+      },
+      "weather": [
+        {
+          "id": 803,
+          "main": "Clouds",
+          "description": "broken clouds",
+          "icon": "04d"
+        }
+      ]
+    },
+    {
+      "id": 2510400,
+      "name": "Tolosa",
+      "coord": {
+        "lat": 39.2,
+        "lon": -1.3667
+      },
+      "main": {
+        "temp": 77.67,
+        "feels_like": 76.35,
+        "temp_min": 74.52,
+        "temp_max": 77.67,
+        "pressure": 1015,
+        "humidity": 26
+      },
+      "dt": 1711109482,
+      "wind": {
+        "speed": 5.99,
+        "deg": 33
+      },
+      "sys": {
+        "country": "ES"
+      },
+      "rain": null,
+      "snow": null,
+      "clouds": {
+        "all": 58
+      },
+      "weather": [
+        {
+          "id": 803,
+          "main": "Clouds",
+          "description": "broken clouds",
+          "icon": "04d"
+        }
+      ]
+    }
+  ]
+}
