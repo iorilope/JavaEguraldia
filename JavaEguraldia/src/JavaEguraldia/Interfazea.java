@@ -69,6 +69,18 @@ public class Interfazea extends JFrame {
 	
 	String tenperaturaString;
 	
+	String tenperaturamaxString;
+	String	tenperaturaminString;
+	String baldintzameteoString;
+	String HaizeaNorantzaString;
+	String HaizeaAbiaduraString;
+	Double EuriKantitateaDouble;
+	Double elurKantitateaDouble;
+	Double lainoportzentaia;
+	Long sunrisetimestamp;
+	Long sunsetsetimestamp;
+	int sunsettimezone;
+	int sunrisetimezone;
 
 	
 	/**
@@ -268,7 +280,7 @@ public class Interfazea extends JFrame {
         
         //Goiko panela 
         JPanel GoikoPanela = new JPanel();
-        GoikoPanela.setLayout(new GridLayout(1, 2, 5, 0)); // Gap between columns (5px), no gap between rows (0px)
+        GoikoPanela.setLayout(new GridLayout(1, 2,0,0)); // Gap between columns (5px), no gap between rows (0px)
 
         //GoikoPanela.setBackground(Color.blue);
 
@@ -334,7 +346,7 @@ public class Interfazea extends JFrame {
         JLabel DataorduTextField = new JLabel();
         DataorduTextField.setText(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date()));
         GoikoPanela.add(DataorduTextField);
-        GoikoPanela.setPreferredSize(new Dimension(600,50));
+       
        
   
         
@@ -342,17 +354,23 @@ public class Interfazea extends JFrame {
         
         
         JPanel ErdikoPanela = new JPanel();
-        ErdikoPanela.setLayout(new BorderLayout());
+        ErdikoPanela.setLayout(new GridLayout(1, 2));
 
         //Erdiko Paneleko konponenteak gehitu
         
+        JPanel leftPanel = new JPanel();
+        leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
         
-      
         
+        JPanel TenperaturaPanel = new JPanel();
+        
+        leftPanel.add(TenperaturaPanel);
+        TenperaturaPanel.setLayout(new BoxLayout(TenperaturaPanel, BoxLayout.Y_AXIS));
         
         
         JLabel tenperaturaLabel = new JLabel("Tenperatura: ");
-        ErdikoPanela.add(tenperaturaLabel, BorderLayout.NORTH);
+
+    
         
 
         JLabel tenperaturaTextField = new JLabel();
@@ -361,52 +379,222 @@ public class Interfazea extends JFrame {
         	Eguraldia eguraldia = new Eguraldia();
 	        tenperaturaString = eguraldia.getTemperaturaHome();
 	       
-	        	
-	        	tenperaturaLabel.setText("Tenperatura: "+tenperaturaString + "°C");
-				
-			
-        	
-			
+	        	tenperaturaLabel.setText("Tenperatura: "+tenperaturaString + " °C");
+		
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
         
-        tenperaturaTextField.setText("");
-        ErdikoPanela.add(tenperaturaTextField, BorderLayout.CENTER);
+        JLabel tenperaturamaxLabel = new JLabel("Tenperatura Max: ");
 
-        JLabel BaldintzaMeteorologikoakLabel = new JLabel("Baldintza Meteorologikoak: ");
-        ErdikoPanela.add(BaldintzaMeteorologikoakLabel, BorderLayout.SOUTH);
+     
+        
+        try {
+        	Eguraldia eguraldia = new Eguraldia();
+	        tenperaturamaxString = eguraldia.getTemperaturamaxHome();
+	       
+	        tenperaturamaxLabel.setText("Tenperatura Max: "+tenperaturamaxString + " °C");
+		
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+        
+        JLabel tenperaturaminLabel = new JLabel("Tenperatura Min: ");
+        
 
-        JLabel BaldintzaMeteorologikoakTextField = new JLabel();
-        BaldintzaMeteorologikoakTextField.setText("Eguzkitsua");
-        ErdikoPanela.add(BaldintzaMeteorologikoakTextField, BorderLayout.SOUTH);
-
-        ImageIcon KlimaIrudia = new ImageIcon("C:\\Users\\1ag3.iorilope\\Downloads\\weather-forecast.png"); // irudia
-        JLabel KlimaIrudiaLabel = new JLabel(KlimaIrudia);
-        ErdikoPanela.add(KlimaIrudiaLabel, BorderLayout.EAST);
-
-       
+        try {
+        	Eguraldia eguraldia = new Eguraldia();
+	        tenperaturaminString = eguraldia.getTemperaturaminHome();
+	       
+	        tenperaturaminLabel.setText("Tenperatura Min: "+tenperaturaminString + " °C");
+		
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
         
      
         
-        JPanel panelInferior = new JPanel();
-        panelInferior.setLayout(new FlowLayout());
+        
+        
+        leftPanel.add(tenperaturaLabel);
+        leftPanel.add(tenperaturaTextField);
+        leftPanel.add(tenperaturamaxLabel);
+        leftPanel.add(tenperaturaminLabel);
 
-        // Añadir componentes al panel inferior
-        JLabel pronosticoLabel = new JLabel("Pronóstico: ");
-        panelInferior.add(pronosticoLabel);
+        
+        JPanel RightPanel = new JPanel();
 
-        JComboBox pronosticoComboBox = new JComboBox();
-        pronosticoComboBox.addItem("Hoy");
-        pronosticoComboBox.addItem("Mañana");
-        pronosticoComboBox.addItem("Próximos 7 días");
-        panelInferior.add(pronosticoComboBox);
+        
+        TenperaturaPanel.add(tenperaturaLabel);
+        TenperaturaPanel.add(tenperaturamaxLabel);
+        
+     
+        
+     
+
+        JLabel BaldintzaMeteorologikoakLabel = new JLabel("Baldintza Meteorologikoak: ");
+        RightPanel.add(BaldintzaMeteorologikoakLabel);
+
+        JLabel BaldintzaMeteorologikoakTextField = new JLabel();
+        JLabel EuriKantitateaJLabel = new JLabel("");
+        JLabel ElurKantitateaJLabel = new JLabel("");
+        JLabel LainoPortzentaiaJLabel = new JLabel("");
+        
+        try {
+        	Eguraldia eguraldia = new Eguraldia();
+	        baldintzameteoString = eguraldia.getBaldintzameteorologikoaHome();
+	        
+	        if (baldintzameteoString.equalsIgnoreCase("Clouds")) {
+	        	
+	        	BaldintzaMeteorologikoakTextField.setText("Lainoak");
+				
+			}
+	        else if (baldintzameteoString.equalsIgnoreCase("Rain")) {
+	        	
+	        	BaldintzaMeteorologikoakTextField.setText("Euria");
+	        	try {
+	        		
+	              	EuriKantitateaDouble = eguraldia.geteurikantitateaHome();
+	              	EuriKantitateaJLabel.setText("Euri Kantitatea: "+EuriKantitateaDouble);
+	        	        
+	        		} catch (Exception e) {
+	        			// TODO: handle exception
+	        		}
+
+	        	
+				
+			}
+	        else if (baldintzameteoString.equalsIgnoreCase("Snow")) {
+	        	BaldintzaMeteorologikoakTextField.setText("Elurra");
+ 	try {
+	        		
+	              	elurKantitateaDouble = eguraldia.getElurkantitateaHome();
+	              	ElurKantitateaJLabel.setText("Elur Kantitatea: "+elurKantitateaDouble);
+	        	        
+	        		} catch (Exception e) {
+	        			// TODO: handle exception
+	        		}
+				
+			}
+	        else if (baldintzameteoString.equalsIgnoreCase("Clear")) {
+	        	BaldintzaMeteorologikoakTextField.setText("Eguzkia");
+				
+			}
+	        
+	        
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+        
+        
+        
+       
+        RightPanel.add(BaldintzaMeteorologikoakTextField);
+        try {
+        	Eguraldia eguraldia = new Eguraldia();
+        	lainoportzentaia = eguraldia.getlainoportzentaiaHome();
+        	LainoPortzentaiaJLabel.setText("Laino Portzentaia: "+lainoportzentaia +"%");
+	        
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+        
+        RightPanel.add(LainoPortzentaiaJLabel);
+        JLabel sunriseLabel = new JLabel("Sunrise: ");
+        try {
+        	Eguraldia eguraldia = new Eguraldia();
+	        sunrisetimestamp = eguraldia.getsunrise();
+	        sunrisetimezone = eguraldia.gettimezone();
+	        String datasunrise = eguraldia.getFecha(sunrisetimestamp, sunrisetimezone);
+	        System.out.println("Data: " + datasunrise);
+	        sunriseLabel.setText("sunrise: "+datasunrise);
+		
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+        
+        RightPanel.add(sunriseLabel);
+        JLabel sunsetlabel = new JLabel("Sunset: ");
+        try {
+        	Eguraldia eguraldia = new Eguraldia();
+	        sunsetsetimestamp = eguraldia.getsunset();
+	        sunsettimezone = eguraldia.gettimezone();
+	        String datasunset = eguraldia.getFecha(sunsetsetimestamp, sunsettimezone);
+	        System.out.println("Data: " + datasunset);
+	       
+	        sunsetlabel.setText("SunSet: "+datasunset);
+		
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+        
+        RightPanel.add(sunsetlabel);
+        
+        JLabel haizeaNorantzaJLabel = new JLabel("Haizearen norantza: ");
+      
+        
+        try {
+        	Eguraldia eguraldia = new Eguraldia();
+        	HaizeaNorantzaString = eguraldia.getHaizearenNorantzaHome();
+        	haizeaNorantzaJLabel.setText("Haizearen norantza: "+HaizeaNorantzaString);
+	        
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+  
+       RightPanel.add(haizeaNorantzaJLabel);
+       
+       JLabel haizeaAbiadruaJLabel = new JLabel("Haizearen abiadura: ");
+       
+       
+       try {
+       	Eguraldia eguraldia = new Eguraldia();
+       	HaizeaAbiaduraString = eguraldia.getHaizearenAbiaduraHome();
+       	haizeaAbiadruaJLabel.setText("Haizearen abiadura: "+HaizeaAbiaduraString);
+	        
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+ 
+      RightPanel.add(haizeaAbiadruaJLabel);
+      
+      
+      
+      
+      
+     RightPanel.add(EuriKantitateaJLabel);
+      
+      
+       
+        
+
+//        ImageIcon KlimaIrudia = new ImageIcon("C:\\Users\\1ag3.iorilope\\Downloads\\weather-forecast.png"); // Your image path
+//        JLabel KlimaIrudiaLabel = new JLabel(KlimaIrudia);
+//        RightPanel.add(KlimaIrudiaLabel);
+
+        ErdikoPanela.add(leftPanel);
+        ErdikoPanela.add(RightPanel);
+        
+     
+        
+//        JPanel panelInferior = new JPanel();
+//        panelInferior.setLayout(new FlowLayout());
+//
+//        // Añadir componentes al panel inferior
+//        JLabel pronosticoLabel = new JLabel("Pronóstico: ");
+//        panelInferior.add(pronosticoLabel);
+//
+//        JComboBox pronosticoComboBox = new JComboBox();
+//        pronosticoComboBox.addItem("Hoy");
+//        pronosticoComboBox.addItem("Mañana");
+//        pronosticoComboBox.addItem("Próximos 7 días");
+//        panelInferior.add(pronosticoComboBox);
 
         
         
         homeMenuInterfazea.add(GoikoPanela, BorderLayout.NORTH);
         homeMenuInterfazea.add(ErdikoPanela, BorderLayout.CENTER);
-        homeMenuInterfazea.add(panelInferior, BorderLayout.SOUTH);
+       // homeMenuInterfazea.add(panelInferior, BorderLayout.SOUTH);
         
         
         

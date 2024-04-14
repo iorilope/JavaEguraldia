@@ -16,7 +16,10 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.TimeZone;
 
 import com.fasterxml.jackson.annotation.JsonProperty; 
 public class Eguraldia {
@@ -40,7 +43,7 @@ public class Eguraldia {
 	 Request request;
 	 Response response;
 	
-	 String cityNameHome = "Tolosa,ES";
+	 String cityNameHome = "Tolosa,Es";
 	 String hiria;
 	
 
@@ -183,13 +186,9 @@ public class Eguraldia {
 		}
 	public String getTemperaturaHome() throws IOException {
 		
-		
-		
 		try {
 			
-			
-			
-			//lortulatlon();
+
 			
 			 OkHttpClient client = new OkHttpClient();
 			 String url = BASE_URL + "forecast?q=" + cityNameHome + "&mode=json&units=metric&appid=" + API_KEY;
@@ -241,15 +240,669 @@ public class Eguraldia {
 			// TODO: handle exception
 		}
 		return null;
-		
-		
-		
-		
-		
+	
 		
 	}
 	
+	public String getTemperaturamaxHome() throws IOException {
+		
+		try {
+			
+
+			
+			 OkHttpClient client = new OkHttpClient();
+			 String url = BASE_URL + "forecast?q=" + cityNameHome + "&mode=json&units=metric&appid=" + API_KEY;
+			
+			 Request request = new Request.Builder().url(url).build();
+
+			 Response response = client.newCall(request).execute();
+			    if (response.isSuccessful()) {
+				      String jsonData = response.body().string();
+
+				      // Use Jackson for JSON parsing
+				      ObjectMapper mapper = new ObjectMapper();
+				      try {
+				        JsonNode rootNode = mapper.readTree(jsonData);
+
+				     // Assuming you want the temperature for the first time slot (index 0)
+				        JsonNode listNode = rootNode.path("list");
+
+				     // Get the first element (index 0) from the "list" array
+				     JsonNode firstTimeSlotNode = listNode.get(0);
+
+				     // Access the "main" node within the first element
+				     JsonNode mainNode = firstTimeSlotNode.path("main");
+
+				     // Extract the temperature value from the "temp" node
+				     JsonNode tempmaxNode = mainNode.path("temp_max");
+
+				     // Check if the node is textual (assuming temperature is a number)
+				     if (tempmaxNode.isDouble()) {
+				       // Get the temperature as a double
+				    	 System.out.println("Temperature max: " + tempmaxNode.asText());
+				       return  tempmaxNode.asText();
+				      
+				     } else {
+				       System.err.println("Error: Temperature node is not textual");
+				     }
+
+				      } catch (JsonProcessingException e) {
+				        System.err.println("Error parsing JSON data: " + e.getMessage());
+				     
+				      }
+				    } else {
+				      System.err.println("Error fetching location data: " + response.code());
+				      return null;
+				    
+				    }
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return null;
 	
+		
+	}
+public String getTemperaturaminHome() throws IOException {
+		
+		try {
+			
+
+			
+			 OkHttpClient client = new OkHttpClient();
+			 String url = BASE_URL + "forecast?q=" + cityNameHome + "&mode=json&units=metric&appid=" + API_KEY;
+			
+			 Request request = new Request.Builder().url(url).build();
+
+			 Response response = client.newCall(request).execute();
+			    if (response.isSuccessful()) {
+				      String jsonData = response.body().string();
+
+				      // Use Jackson for JSON parsing
+				      ObjectMapper mapper = new ObjectMapper();
+				      try {
+				        JsonNode rootNode = mapper.readTree(jsonData);
+
+				     // Assuming you want the temperature for the first time slot (index 0)
+				        JsonNode listNode = rootNode.path("list");
+
+				     // Get the first element (index 0) from the "list" array
+				     JsonNode firstTimeSlotNode = listNode.get(0);
+
+				     // Access the "main" node within the first element
+				     JsonNode mainNode = firstTimeSlotNode.path("main");
+
+				     // Extract the temperature value from the "temp" node
+				     JsonNode tempminNode = mainNode.path("temp_min");
+
+				     // Check if the node is textual (assuming temperature is a number)
+				     if (tempminNode.isDouble()) {
+				       // Get the temperature as a double
+				    	 System.out.println("Temperature min: " + tempminNode.asText());
+				       return  tempminNode.asText();
+				      
+				     } else {
+				       System.err.println("Error: Temperature node is not textual");
+				     }
+
+				      } catch (JsonProcessingException e) {
+				        System.err.println("Error parsing JSON data: " + e.getMessage());
+				     
+				      }
+				    } else {
+				      System.err.println("Error fetching location data: " + response.code());
+				      return null;
+				    
+				    }
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return null;
+	
+		
+	}
+
+public String getBaldintzameteorologikoaHome() throws IOException {
+	
+	try {
+		
+
+		
+		 OkHttpClient client = new OkHttpClient();
+		 String url = BASE_URL + "forecast?q=" + cityNameHome + "&mode=json&units=metric&appid=" + API_KEY;
+		
+		 Request request = new Request.Builder().url(url).build();
+
+		 Response response = client.newCall(request).execute();
+		    if (response.isSuccessful()) {
+			      String jsonData = response.body().string();
+
+			      // Use Jackson for JSON parsing
+			      ObjectMapper mapper = new ObjectMapper();
+			      try {
+			    	    JsonNode rootNode = mapper.readTree(jsonData);
+
+			    	    JsonNode listNode = rootNode.path("list");
+
+			    	    JsonNode firstTimeSlotNode = listNode.get(0);
+
+			    	    // Access the "weather" node within the first element
+			    	    JsonNode weatherNode = firstTimeSlotNode.path("weather");
+
+			    	    // Check if the weather node is an array (assuming multiple weather conditions)
+			    	    if (weatherNode.isArray()) {
+			    	        // Access the first element of the weather array (assuming primary condition)
+			    	        JsonNode firstWeatherCondition = weatherNode.get(0);
+
+			    	        // Extract the "main" field for the weather condition (Clouds in this case)
+			    	        JsonNode weatherDescription = firstWeatherCondition.path("main");
+
+			    	        // Check if the node is textual
+			    	        if (weatherDescription.isTextual()) {
+			    	            System.out.println("Weather: " + weatherDescription.asText());
+			    	            return weatherDescription.asText();
+			    	        } else {
+			    	            System.err.println("Error: Weather description node is not textual");
+			    	        }
+			    	    } else {
+			    	        System.err.println("Error: Weather node is not an array");
+			    	    }
+
+			    	} catch (JsonProcessingException e) {
+			    	    System.err.println("Error parsing JSON data: " + e.getMessage());
+			    	}
+			    } else {
+			      System.err.println("Error fetching location data: " + response.code());
+			      return null;
+			    
+			    }
+		
+	} catch (Exception e) {
+		// TODO: handle exception
+	}
+	return null;
+
+	
+}
+
+public String getHaizearenNorantzaHome() throws IOException {
+	
+	try {
+		
+
+		
+		 OkHttpClient client = new OkHttpClient();
+		 String url = BASE_URL + "forecast?q=" + cityNameHome + "&mode=json&units=metric&appid=" + API_KEY;
+		
+		 Request request = new Request.Builder().url(url).build();
+
+		 Response response = client.newCall(request).execute();
+		    if (response.isSuccessful()) {
+			      String jsonData = response.body().string();
+
+			      // Use Jackson for JSON parsing
+			      ObjectMapper mapper = new ObjectMapper();
+			      try {
+			    	    JsonNode rootNode = mapper.readTree(jsonData);
+
+			    	    JsonNode listNode = rootNode.path("list");
+
+			    	    JsonNode firstTimeSlotNode = listNode.get(0);
+
+			    	    // Access the "wind" node within the first element
+			    	    JsonNode windNode = firstTimeSlotNode.path("wind");
+
+			    	    // Check if the wind node exists and is an object
+			    	    if (windNode.isObject()) {
+			    	        // Extract the "deg" value from the "wind" node
+			    	        JsonNode windDegNode = windNode.path("deg");
+
+			    	        // Check if the node is a number (assuming deg is numerical)
+			    	        if (windDegNode.isNumber()) {
+			    	            
+			    	            System.out.println("Wind direction (deg): " + windDegNode.asText());
+			    	            return windDegNode.asText();
+			    	        } else {
+			    	            System.err.println("Error: Wind deg node is not a number");
+			    	        }
+			    	    } else {
+			    	        System.err.println("Error: Wind node does not exist or is not an object");
+			    	    }
+
+			    	} catch (JsonProcessingException e) {
+			    	    System.err.println("Error parsing JSON data: " + e.getMessage());
+			    	}
+			    } else {
+			      System.err.println("Error fetching location data: " + response.code());
+			      return null;
+			    
+			    }
+		
+	} catch (Exception e) {
+		// TODO: handle exception
+	}
+	return null;
+
+	
+}
+
+public String getHaizearenAbiaduraHome() throws IOException {
+	
+	try {
+		
+
+		
+		 OkHttpClient client = new OkHttpClient();
+		 String url = BASE_URL + "forecast?q=" + cityNameHome + "&mode=json&units=metric&appid=" + API_KEY;
+		
+		 Request request = new Request.Builder().url(url).build();
+
+		 Response response = client.newCall(request).execute();
+		    if (response.isSuccessful()) {
+			      String jsonData = response.body().string();
+
+			      // Use Jackson for JSON parsing
+			      ObjectMapper mapper = new ObjectMapper();
+			      try {
+			    	    JsonNode rootNode = mapper.readTree(jsonData);
+
+			    	    JsonNode listNode = rootNode.path("list");
+
+			    	    JsonNode firstTimeSlotNode = listNode.get(0);
+
+			    	    // Access the "wind" node within the first element
+			    	    JsonNode windNode = firstTimeSlotNode.path("wind");
+
+			    	    // Check if the wind node exists and is an object
+			    	    if (windNode.isObject()) {
+			    	        // Extract the "speed" value from the "wind" node
+			    	        JsonNode windspeedNode = windNode.path("speed");
+
+			    	        // Check if the node is a number (assuming deg is numerical)
+			    	        if (windspeedNode.isNumber()) {
+			    	            
+			    	            System.out.println("Wind speed: " + windspeedNode.asText());
+			    	            return windspeedNode.asText();
+			    	        } else {
+			    	            System.err.println("Error: Wind deg node is not a number");
+			    	        }
+			    	    } else {
+			    	        System.err.println("Error: Wind node does not exist or is not an object");
+			    	    }
+
+			    	} catch (JsonProcessingException e) {
+			    	    System.err.println("Error parsing JSON data: " + e.getMessage());
+			    	}
+			    } else {
+			      System.err.println("Error fetching location data: " + response.code());
+			      return null;
+			    
+			    }
+		
+	} catch (Exception e) {
+		// TODO: handle exception
+	}
+	return null;
+
+	
+}
+
+public double geteurikantitateaHome() throws IOException {
+	
+	try {
+		
+
+		
+		 OkHttpClient client = new OkHttpClient();
+		 String url = BASE_URL + "forecast?q=" + cityNameHome + "&mode=json&units=metric&appid=" + API_KEY;
+		
+		 Request request = new Request.Builder().url(url).build();
+
+		 Response response = client.newCall(request).execute();
+		    if (response.isSuccessful()) {
+			      String jsonData = response.body().string();
+
+			      // Use Jackson for JSON parsing
+			      ObjectMapper mapper = new ObjectMapper();
+			      try {
+			    	    JsonNode rootNode = mapper.readTree(jsonData);
+
+			    	    JsonNode listNode = rootNode.path("list");
+
+			    	    // Initialize variables to store first rain data
+			    	    double firstRainAmount = -1; // Use a negative value to indicate no rain found yet
+			    	    String firstRainTime = "";
+
+			    	    for (int i = 0; i < listNode.size(); i++) {
+			    	        JsonNode timeSlotNode = listNode.get(i);
+
+			    	        JsonNode rainNode = timeSlotNode.path("rain");
+			    	        if (rainNode.isObject()) {
+			    	            // Extract "3h" value and time from rainNode
+			    	            Double rainAmount = rainNode.path("3h").asDouble();
+			    	            String rainTime = timeSlotNode.path("dt_txt").asText();
+
+			    	            // Check if rain has been found previously
+			    	            if (firstRainAmount == -1) {
+			    	                firstRainAmount = rainAmount;
+			    	                firstRainTime = rainTime;
+			    	                System.out.println(firstRainAmount);
+			    	                return firstRainAmount;
+			    	                // No need to continue iterating after finding first rain
+			    	            }
+			    	        }
+			    	    }
+
+			    	    // Bilatutako lehen euria erakutsi
+//			    	    if (firstRainAmount != -1) {
+//			    	        System.out.println("First rain information:");
+//			    	        System.out.println("Time: " + firstRainTime);
+//			    	        System.out.println("3-hour rain amount: " + firstRainAmount);
+//			    	    } else {
+//			    	        System.out.println("Rain information not found in the provided JSON data.");
+//			    	    }
+
+			    	} catch (JsonProcessingException e) {
+			    	    System.err.println("Error parsing JSON data: " + e.getMessage());
+			    	}
+			    } else {
+			      System.err.println("Error fetching location data: " + response.code());
+			      return 0;
+			    
+			    }
+		
+	} catch (Exception e) {
+		// TODO: handle exception
+	}
+	return 0;
+
+	
+}
+	
+public double getElurkantitateaHome() throws IOException {
+	
+	try {
+		
+
+		
+		 OkHttpClient client = new OkHttpClient();
+		 String url = BASE_URL + "forecast?q=" + cityNameHome + "&mode=json&units=metric&appid=" + API_KEY;
+		
+		 Request request = new Request.Builder().url(url).build();
+
+		 Response response = client.newCall(request).execute();
+		    if (response.isSuccessful()) {
+			      String jsonData = response.body().string();
+
+			      // Use Jackson for JSON parsing
+			      ObjectMapper mapper = new ObjectMapper();
+			      try {
+			    	    JsonNode rootNode = mapper.readTree(jsonData);
+
+			    	    JsonNode listNode = rootNode.path("list");
+
+			    	    // Initialize variables to store first rain data
+			    	    double firstsnowAmount = -1; // Use a negative value to indicate no rain found yet
+			    	    String firstsnownTime = "";
+
+			    	    for (int i = 0; i < listNode.size(); i++) {
+			    	        JsonNode timeSlotNode = listNode.get(i);
+
+			    	        JsonNode rainNode = timeSlotNode.path("snow");
+			    	        if (rainNode.isObject()) {
+			    	            // Extract "3h" value and time from rainNode
+			    	            Double snowAmount = rainNode.path("3h").asDouble();
+			    	            String snowTime = timeSlotNode.path("dt_txt").asText();
+
+			    	            // Check if rain has been found previously
+			    	            if (firstsnowAmount == -1) {
+			    	            	firstsnowAmount = snowAmount;
+			    	            	firstsnownTime = snowTime;
+			    	                System.out.println(firstsnowAmount);
+			    	                return firstsnowAmount;
+			    	                // No need to continue iterating after finding first rain
+			    	            }
+			    	        }
+			    	    }
+
+			    	    // Bilatutako lehen euria erakutsi
+//			    	    if (firstRainAmount != -1) {
+//			    	        System.out.println("First rain information:");
+//			    	        System.out.println("Time: " + firstRainTime);
+//			    	        System.out.println("3-hour rain amount: " + firstRainAmount);
+//			    	    } else {
+//			    	        System.out.println("Rain information not found in the provided JSON data.");
+//			    	    }
+
+			    	} catch (JsonProcessingException e) {
+			    	    System.err.println("Error parsing JSON data: " + e.getMessage());
+			    	}
+			    } else {
+			      System.err.println("Error fetching location data: " + response.code());
+			      return 0;
+			    
+			    }
+		
+	} catch (Exception e) {
+		// TODO: handle exception
+	}
+	return 0;
+
+}
+public double getlainoportzentaiaHome() throws IOException {
+	
+	try {
+		
+
+		
+		 OkHttpClient client = new OkHttpClient();
+		 String url = BASE_URL + "forecast?q=" + cityNameHome + "&mode=json&units=metric&appid=" + API_KEY;
+		
+		 Request request = new Request.Builder().url(url).build();
+
+		 Response response = client.newCall(request).execute();
+		    if (response.isSuccessful()) {
+			      String jsonData = response.body().string();
+
+			      // Use Jackson for JSON parsing
+			      ObjectMapper mapper = new ObjectMapper();
+			      try {
+			    	    JsonNode rootNode = mapper.readTree(jsonData);
+
+			    	    JsonNode listNode = rootNode.path("list");
+
+			    	    // Initialize variables to store first rain data
+			    	    double firstlainoportzentaiaAmount = -1; // Use a negative value to indicate no rain found yet
+			    	    String firstlainoportzentaiaTime = "";
+
+			    	    for (int i = 0; i < listNode.size(); i++) {
+			    	        JsonNode timeSlotNode = listNode.get(i);
+
+			    	        JsonNode lainoportzentaiaNode = timeSlotNode.path("clouds");
+			    	        if (lainoportzentaiaNode.isObject()) {
+			    	            // Extract "3h" value and time from rainNode
+			    	            Double lainoportzentaiaAmount = lainoportzentaiaNode.path("all").asDouble();
+			    	            String lainoportzentaiaTime = timeSlotNode.path("dt_txt").asText();
+
+			    	            // Check if rain has been found previously
+			    	            if (firstlainoportzentaiaAmount == -1) {
+			    	            	firstlainoportzentaiaAmount = lainoportzentaiaAmount;
+			    	            	firstlainoportzentaiaTime = lainoportzentaiaTime;
+			    	                System.out.println(firstlainoportzentaiaAmount);
+			    	                return firstlainoportzentaiaAmount;
+			    	                // No need to continue iterating after finding first rain
+			    	            }
+			    	        }
+			    	    }
+
+			    	    // Bilatutako lehen euria erakutsi
+//			    	    if (firstRainAmount != -1) {
+//			    	        System.out.println("First rain information:");
+//			    	        System.out.println("Time: " + firstRainTime);
+//			    	        System.out.println("3-hour rain amount: " + firstRainAmount);
+//			    	    } else {
+//			    	        System.out.println("Rain information not found in the provided JSON data.");
+//			    	    }
+
+			    	} catch (JsonProcessingException e) {
+			    	    System.err.println("Error parsing JSON data: " + e.getMessage());
+			    	}
+			    } else {
+			      System.err.println("Error fetching location data: " + response.code());
+			      return 0;
+			    
+			    }
+		
+	} catch (Exception e) {
+		// TODO: handle exception
+	}
+	return 0;
+
+	
+}
+public Long getsunrise() throws IOException {
+	
+	try {
+		
+
+		
+		 OkHttpClient client = new OkHttpClient();
+		 String url = BASE_URL + "forecast?q=" + cityNameHome + "&mode=json&units=metric&appid=" + API_KEY;
+		
+		 Request request = new Request.Builder().url(url).build();
+
+		 Response response = client.newCall(request).execute();
+		    if (response.isSuccessful()) {
+			      String jsonData = response.body().string();
+
+			      // Use Jackson for JSON parsing
+			      ObjectMapper mapper = new ObjectMapper();
+			      try {
+			    	    JsonNode rootNode = mapper.readTree(jsonData);
+
+			    	    long sunriseTimestamp = rootNode.path("city").path("sunrise").asLong();
+			    	    System.out.println(sunriseTimestamp);
+			    	    return sunriseTimestamp;
+			    	    
+			    	    
+
+			    	} catch (JsonProcessingException e) {
+			    	    System.err.println("Error parsing JSON data: " + e.getMessage());
+			    	}
+			    } else {
+			      System.err.println("Error fetching location data: " + response.code());
+			      return (long) 0;
+			    
+			    }
+		
+	} catch (Exception e) {
+		// TODO: handle exception
+	}
+	return (long) 0;
+
+	
+}
+public Long getsunset() throws IOException {
+	
+	try {
+		
+
+		
+		 OkHttpClient client = new OkHttpClient();
+		 String url = BASE_URL + "forecast?q=" + cityNameHome + "&mode=json&units=metric&appid=" + API_KEY;
+		
+		 Request request = new Request.Builder().url(url).build();
+
+		 Response response = client.newCall(request).execute();
+		    if (response.isSuccessful()) {
+			      String jsonData = response.body().string();
+
+			      // Use Jackson for JSON parsing
+			      ObjectMapper mapper = new ObjectMapper();
+			      try {
+			    	    JsonNode rootNode = mapper.readTree(jsonData);
+
+			    	    long sunsetTimestamp = rootNode.path("city").path("sunset").asLong();
+			    	    System.out.println(sunsetTimestamp);
+			    	    return sunsetTimestamp;
+			    	    
+			    	    
+
+			    	} catch (JsonProcessingException e) {
+			    	    System.err.println("Error parsing JSON data: " + e.getMessage());
+			    	}
+			    } else {
+			      System.err.println("Error fetching location data: " + response.code());
+			      return (long) 0;
+			    
+			    }
+		
+	} catch (Exception e) {
+		// TODO: handle exception
+	}
+	return (long) 0;
+
+	
+}
+public int gettimezone() throws IOException {
+	
+	try {
+		
+
+		
+		 OkHttpClient client = new OkHttpClient();
+		 String url = BASE_URL + "forecast?q=" + cityNameHome + "&mode=json&units=metric&appid=" + API_KEY;
+		
+		 Request request = new Request.Builder().url(url).build();
+
+		 Response response = client.newCall(request).execute();
+		    if (response.isSuccessful()) {
+			      String jsonData = response.body().string();
+
+			      // Use Jackson for JSON parsing
+			      ObjectMapper mapper = new ObjectMapper();
+			      try {
+			    	    JsonNode rootNode = mapper.readTree(jsonData);
+
+			    	    int timezoneTimestamp = rootNode.path("city").path("timezone").asInt();
+			    	    System.out.println(timezoneTimestamp);
+			    	    return timezoneTimestamp;
+			    	    
+			    	    
+
+			    	} catch (JsonProcessingException e) {
+			    	    System.err.println("Error parsing JSON data: " + e.getMessage());
+			    	}
+			    } else {
+			      System.err.println("Error fetching location data: " + response.code());
+			      return  0;
+			    
+			    }
+		
+	} catch (Exception e) {
+		// TODO: handle exception
+	}
+	return  0;
+
+	
+}
+public String getFecha(long timestamp, int timezoneOffset) {
+	  // Convertir el timestamp a milisegundos
+	  long timestampMs = timestamp * 1000;
+
+	  // Crear un objeto Date con el timestamp en milisegundos y la zona horaria
+	  Date date = new Date(timestampMs + (timezoneOffset * 1000));
+
+	  // Formatear la fecha como cadena
+	  SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+
+	  // Establecer la zona horaria del formateador
+	  formatter.setTimeZone(TimeZone.getTimeZone("GMT+" + timezoneOffset / 3600));
+
+	  // Devolver la fecha formateada
+	  return formatter.format(date);
+	}
 	  
 	  
 	/* ObjectMapper om = new ObjectMapper();
