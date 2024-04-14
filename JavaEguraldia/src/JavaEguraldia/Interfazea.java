@@ -321,6 +321,7 @@ public class Interfazea extends JFrame {
         	        hiria = eguraldia.getHiriaIzena(hiria);
         	        
         	        
+        	        
         	        //Metodoak hemen ezarri bilatu ondoren egiteko
         	        
         	      } catch (IOException ex) {
@@ -503,8 +504,8 @@ public class Interfazea extends JFrame {
         JLabel sunriseLabel = new JLabel("Sunrise: ");
         try {
         	Eguraldia eguraldia = new Eguraldia();
-	        sunrisetimestamp = eguraldia.getsunrise();
-	        sunrisetimezone = eguraldia.gettimezone();
+	        sunrisetimestamp = eguraldia.getsunrisehome();
+	        sunrisetimezone = eguraldia.gettimezonehome();
 	        String datasunrise = eguraldia.getFecha(sunrisetimestamp, sunrisetimezone);
 	        System.out.println("Data: " + datasunrise);
 	        sunriseLabel.setText("sunrise: "+datasunrise);
@@ -517,8 +518,8 @@ public class Interfazea extends JFrame {
         JLabel sunsetlabel = new JLabel("Sunset: ");
         try {
         	Eguraldia eguraldia = new Eguraldia();
-	        sunsetsetimestamp = eguraldia.getsunset();
-	        sunsettimezone = eguraldia.gettimezone();
+	        sunsetsetimestamp = eguraldia.getsunsethome();
+	        sunsettimezone = eguraldia.gettimezonehome();
 	        String datasunset = eguraldia.getFecha(sunsetsetimestamp, sunsettimezone);
 	        System.out.println("Data: " + datasunset);
 	       
