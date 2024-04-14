@@ -243,7 +243,7 @@ public class Eguraldia {
 	
 		
 	}
-	public String getTemperatura() throws IOException {
+	public String getTemperatura(String hiria) throws IOException {
 		
 		try {
 			
@@ -362,7 +362,7 @@ public class Eguraldia {
 	
 		
 	}
-public String getTemperaturamax() throws IOException {
+public String getTemperaturamax(String hiria) throws IOException {
 		
 		try {
 			
@@ -480,7 +480,7 @@ public String getTemperaturaminHome() throws IOException {
 	
 		
 	}
-public String getTemperaturamin() throws IOException {
+public String getTemperaturamin(String hiria) throws IOException {
 	
 	try {
 		
@@ -602,7 +602,7 @@ public String getBaldintzameteorologikoaHome() throws IOException {
 
 	
 }
-public String getBaldintzameteorologikoa() throws IOException {
+public String getBaldintzameteorologikoa(String hiria) throws IOException {
 	
 	try {
 		
@@ -725,7 +725,7 @@ public String getHaizearenNorantzaHome() throws IOException {
 
 	
 }
-public String getHaizearenNorantza() throws IOException {
+public String getHaizearenNorantza(String hiria) throws IOException {
 	
 	try {
 		
@@ -846,7 +846,7 @@ public String getHaizearenAbiaduraHome() throws IOException {
 
 	
 }
-public String getHaizearenAbiadura() throws IOException {
+public String getHaizearenAbiadura(String hiria) throws IOException {
 	
 	try {
 		
@@ -978,7 +978,7 @@ public double geteurikantitateaHome() throws IOException {
 
 	
 }
-public double geteurikantitatea() throws IOException {
+public double geteurikantitatea(String hiria) throws IOException {
 	
 	try {
 		
@@ -1120,7 +1120,7 @@ public double getElurkantitateaHome() throws IOException {
 	return 0;
 
 }
-public double getElurkantitatea() throws IOException {
+public double getElurkantitatea(String hiria) throws IOException {
 	
 	try {
 		
@@ -1261,7 +1261,7 @@ public double getlainoportzentaiaHome() throws IOException {
 
 	
 }
-public double getlainoportzentaia() throws IOException {
+public double getlainoportzentaia(String hiria) throws IOException {
 	
 	try {
 		
@@ -1374,7 +1374,7 @@ public Long getsunrisehome() throws IOException {
 
 	
 }
-public Long getsunrise() throws IOException {
+public Long getsunrise(String hiria) throws IOException {
 	
 	try {
 		
@@ -1458,7 +1458,7 @@ public Long getsunsethome() throws IOException {
 
 	
 }
-public Long getsunset() throws IOException {
+public Long getsunset(String hiria) throws IOException {
 	
 	try {
 		
@@ -1542,7 +1542,7 @@ public int gettimezonehome() throws IOException {
 
 	
 }
-public int gettimezone() throws IOException {
+public int gettimezone(String hiria) throws IOException {
 	
 	try {
 		

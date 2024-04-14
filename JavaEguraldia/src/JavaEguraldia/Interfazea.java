@@ -310,6 +310,23 @@ public class Interfazea extends JFrame {
 	      } else {
 	        System.err.println("Error al obtener la ciudad");
 	      }
+	      
+	      
+	      JLabel tenperaturaLabel = new JLabel("Tenperatura: ");
+	      JLabel tenperaturamaxLabel = new JLabel("Tenperatura Max: ");
+	      JLabel tenperaturaminLabel = new JLabel("Tenperatura Min: ");
+	      JLabel BaldintzaMeteorologikoakLabel = new JLabel("Baldintza Meteorologikoak: ");
+	      
+	      JLabel BaldintzaMeteorologikoakTextField = new JLabel();
+	        JLabel EuriKantitateaJLabel = new JLabel("");
+	        JLabel ElurKantitateaJLabel = new JLabel("");
+	        JLabel LainoPortzentaiaJLabel = new JLabel("");
+	        JLabel sunriseLabel = new JLabel("Sunrise: ");
+	        JLabel sunsetlabel = new JLabel("Sunset: ");
+	      
+	        JLabel haizeaNorantzaJLabel = new JLabel("Haizearen norantza: ");
+	        JLabel haizeaAbiadruaJLabel = new JLabel("Haizearen abiadura: ");
+	      
 
         // Add action listener to update hiriaJLabel text
         ubikazioaTextField.addActionListener(new ActionListener() {
@@ -320,6 +337,145 @@ public class Interfazea extends JFrame {
         	        
         	        hiria = eguraldia.getHiriaIzena(hiria);
         	        
+        	        try {
+        	        	Eguraldia eguraldia = new Eguraldia();
+        		        tenperaturaString = eguraldia.getTemperatura(hiria);
+        		       
+        		        	tenperaturaLabel.setText("Tenperatura: "+tenperaturaString + " °C");
+        			
+        			} catch (Exception a) {
+        				// TODO: handle exception
+        			}
+        	        
+        	        try {
+        	        	
+        		        tenperaturamaxString = eguraldia.getTemperaturamax(hiria);
+        		       
+        		        tenperaturamaxLabel.setText("Tenperatura Max: "+tenperaturamaxString + " °C");
+        			
+        			} catch (Exception e1) {
+        				// TODO: handle exception
+        			}
+        	        
+        	        
+        	        try {
+        	        	Eguraldia eguraldia = new Eguraldia();
+        		        tenperaturaminString = eguraldia.getTemperaturamin(hiria);
+        		       
+        		        tenperaturaminLabel.setText("Tenperatura Min: "+tenperaturaminString + " °C");
+        			
+        			} catch (Exception e1) {
+        				// TODO: handle exception
+        			}
+        	        
+        	        
+        	        
+        	        
+        	        
+        	        try {
+        	        	Eguraldia eguraldia = new Eguraldia();
+        		        baldintzameteoString = eguraldia.getBaldintzameteorologikoa(hiria);
+        		        
+        		        if (baldintzameteoString.equalsIgnoreCase("Clouds")) {
+        		        	
+        		        	BaldintzaMeteorologikoakTextField.setText("Lainoak");
+        					
+        				}
+        		        else if (baldintzameteoString.equalsIgnoreCase("Rain")) {
+        		        	
+        		        	BaldintzaMeteorologikoakTextField.setText("Euria");
+        		        	try {
+        		        		
+        		              	EuriKantitateaDouble = eguraldia.geteurikantitatea(hiria);
+        		              	EuriKantitateaJLabel.setText("Euri Kantitatea: "+EuriKantitateaDouble);
+        		        	        
+        		        		} catch (Exception e1) {
+        		        			// TODO: handle exception
+        		        		}
+
+        		        	
+        					
+        				}
+        		        else if (baldintzameteoString.equalsIgnoreCase("Snow")) {
+        		        	BaldintzaMeteorologikoakTextField.setText("Elurra");
+        	 	try {
+        		        		
+        		              	elurKantitateaDouble = eguraldia.getElurkantitatea(hiria);
+        		              	ElurKantitateaJLabel.setText("Elur Kantitatea: "+elurKantitateaDouble);
+        		        	        
+        		        		} catch (Exception e1) {
+        		        			// TODO: handle exception
+        		        		}
+        					
+        				}
+        		        else if (baldintzameteoString.equalsIgnoreCase("Clear")) {
+        		        	BaldintzaMeteorologikoakTextField.setText("Eguzkia");
+        					
+        				}
+        		        
+        		        
+        			} catch (Exception e1) {
+        				// TODO: handle exception
+        			}
+        	        
+        	        
+        	        try {
+        	        	Eguraldia eguraldia = new Eguraldia();
+        	        	lainoportzentaia = eguraldia.getlainoportzentaia(hiria);
+        	        	LainoPortzentaiaJLabel.setText("Laino Portzentaia: "+lainoportzentaia +"%");
+        		        
+        			} catch (Exception e1) {
+        				// TODO: handle exception
+        			}
+        	        
+        	        
+        	        try {
+        	        	
+        		        sunrisetimestamp = eguraldia.getsunrise(hiria);
+        		        sunrisetimezone = eguraldia.gettimezone(hiria);
+        		        String datasunrise = eguraldia.getFecha(sunrisetimestamp, sunrisetimezone);
+        		        System.out.println("Data: " + datasunrise);
+        		        sunriseLabel.setText("sunrise: "+datasunrise);
+        			
+        			} catch (Exception e1) {
+        				// TODO: handle exception
+        			}
+        	        
+        	        
+        	        try {
+        	        	Eguraldia eguraldia = new Eguraldia();
+        		        sunsetsetimestamp = eguraldia.getsunset(hiria);
+        		        sunsettimezone = eguraldia.gettimezone(hiria);
+        		        String datasunset = eguraldia.getFecha(sunsetsetimestamp, sunsettimezone);
+        		        System.out.println("Data: " + datasunset);
+        		       
+        		        sunsetlabel.setText("SunSet: "+datasunset);
+        			
+        			} catch (Exception e1) {
+        				// TODO: handle exception
+        			}
+        	        
+        	        
+        	        try {
+        	        	Eguraldia eguraldia = new Eguraldia();
+        	        	HaizeaNorantzaString = eguraldia.getHaizearenNorantza(hiria);
+        	        	haizeaNorantzaJLabel.setText("Haizearen norantza: "+HaizeaNorantzaString);
+        		        
+        			} catch (Exception e1) {
+        				// TODO: handle exception
+        			}
+        	        
+        	        try {
+        	           	Eguraldia eguraldia = new Eguraldia();
+        	           	HaizeaAbiaduraString = eguraldia.getHaizearenAbiadura(hiria);
+        	           	haizeaAbiadruaJLabel.setText("Haizearen abiadura: "+HaizeaAbiaduraString);
+        	    	        
+        	    		} catch (Exception e1) {
+        	    			// TODO: handle exception
+        	    		}
+        	        
+        	        
+        	        
         	        
         	        
         	        //Metodoak hemen ezarri bilatu ondoren egiteko
@@ -327,6 +483,9 @@ public class Interfazea extends JFrame {
         	      } catch (IOException ex) {
         	        System.err.println("Error fetching city name: " + ex.getMessage());
         	      }
+        	      
+        	      
+        	  
 
         	      if (hiria != null) {
         	        // Update UI with the retrieved city name (e.g., display in a label)
@@ -369,7 +528,7 @@ public class Interfazea extends JFrame {
         TenperaturaPanel.setLayout(new BoxLayout(TenperaturaPanel, BoxLayout.Y_AXIS));
         
         
-        JLabel tenperaturaLabel = new JLabel("Tenperatura: ");
+       
 
     
         
@@ -386,7 +545,7 @@ public class Interfazea extends JFrame {
 			// TODO: handle exception
 		}
         
-        JLabel tenperaturamaxLabel = new JLabel("Tenperatura Max: ");
+       
 
      
         
@@ -400,7 +559,7 @@ public class Interfazea extends JFrame {
 			// TODO: handle exception
 		}
         
-        JLabel tenperaturaminLabel = new JLabel("Tenperatura Min: ");
+       
         
 
         try {
@@ -433,13 +592,10 @@ public class Interfazea extends JFrame {
         
      
 
-        JLabel BaldintzaMeteorologikoakLabel = new JLabel("Baldintza Meteorologikoak: ");
+        
         RightPanel.add(BaldintzaMeteorologikoakLabel);
 
-        JLabel BaldintzaMeteorologikoakTextField = new JLabel();
-        JLabel EuriKantitateaJLabel = new JLabel("");
-        JLabel ElurKantitateaJLabel = new JLabel("");
-        JLabel LainoPortzentaiaJLabel = new JLabel("");
+       
         
         try {
         	Eguraldia eguraldia = new Eguraldia();
@@ -501,7 +657,7 @@ public class Interfazea extends JFrame {
 		}
         
         RightPanel.add(LainoPortzentaiaJLabel);
-        JLabel sunriseLabel = new JLabel("Sunrise: ");
+        
         try {
         	Eguraldia eguraldia = new Eguraldia();
 	        sunrisetimestamp = eguraldia.getsunrisehome();
@@ -515,7 +671,7 @@ public class Interfazea extends JFrame {
 		}
         
         RightPanel.add(sunriseLabel);
-        JLabel sunsetlabel = new JLabel("Sunset: ");
+        
         try {
         	Eguraldia eguraldia = new Eguraldia();
 	        sunsetsetimestamp = eguraldia.getsunsethome();
@@ -531,7 +687,7 @@ public class Interfazea extends JFrame {
         
         RightPanel.add(sunsetlabel);
         
-        JLabel haizeaNorantzaJLabel = new JLabel("Haizearen norantza: ");
+       
       
         
         try {
@@ -545,7 +701,7 @@ public class Interfazea extends JFrame {
   
        RightPanel.add(haizeaNorantzaJLabel);
        
-       JLabel haizeaAbiadruaJLabel = new JLabel("Haizearen abiadura: ");
+      
        
        
        try {
